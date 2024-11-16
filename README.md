@@ -11,13 +11,13 @@
 
 ## Introduction
 
-This plugin helps prevent widow words by replacing the space between the last two words in a string with a non-breaking space. By default, the string must contain at least 3 words to be processed.
+This plugin helps prevent widow words by replacing the space between the last two words in a string with a non-breaking space. By default, the string must contain at least 4 words to be processed.
 
 Input:
 
 ```html
 <div prevent-widows>
-  <p>Prevent widow words</p>
+  <p>The quick brown fox</p>
 </div>
 ```
 
@@ -25,7 +25,7 @@ Output:
 
 ```html
 <div>
-  <p>Prevent widow&nbsp;words</p>
+  <p>The quick brown&nbsp;fox</p>
 </div>
 ```
 
@@ -44,14 +44,14 @@ import preventWidows from 'posthtml-widows'
 posthtml([
   preventWidows()
 ])
-  .process('<div prevent-widows>Prevent widow words</div>')
+  .process('<p prevent-widows>The quick brown fox</p>')
   .then(result => console.log(result.html))
 ```
 
 Result:
 
 ```html
-<div>Prevent widow&nbsp;words</div>
+<p>The quick brown&nbsp;fox</p>
 ```
 
 ## Attributes
@@ -64,9 +64,6 @@ The plugin will only handle strings inside elements that have one of the followi
 You may also specify custom attributes to use:
 
 ```js
-import posthtml from 'posthtml'
-import preventWidows from 'posthtml-widows'
-
 posthtml([
   preventWidows({
     attributes: ['fix-widows']
@@ -82,46 +79,54 @@ posthtml([
 Type: `number`\
 Default: `4`
 
-The minimum number of words required in a string to be processed.
+The minimum number of words a string must contain to be processed.
 
 ```js
-import posthtml from 'posthtml'
-import preventWidows from 'posthtml-widows'
-
 posthtml([
   preventWidows({
     minWords: 3
   })
 ])
-  .process('<div prevent-widows>Prevent widow words</div>')
+  .process('<p prevent-widows>Prevent widow words</p>')
 ```
 
 ### `ignore`
 
 Type: `Array`\
-Default: `[{ start: '{{', end: '}}' }]`
+Default: (array of objects)
 
-An array of objects that specify the start and end delimiters of strings to ignore.
+An array of objects that specify the `start` and `end` delimiters of strings to ignore. Used to avoid processing templating logic or expressions.
+
+By default, the following templating delimiters are ignored:
+
+- `{{ }}` -  Handlebars, Liquid, Nunjucks, Twig, Jinja2, Mustache
+- `{% %}` -  Liquid, Nunjucks, Twig, Jinja2
+- `<%= %>` - EJS, ERB
+- `<% %>` -  EJS, ERB
+- `{$ }` - Smarty
+- `<?php ?>` - PHP
+- `<?= ?>` - PHP
+- `#{ }` - Pug
+
+You may add custom delimiters to ignore:
 
 ```js
-import posthtml from 'posthtml'
-import preventWidows from 'posthtml-widows'
-
 posthtml([
   preventWidows({
     ignore: [
-      { start: '{{', end: '}}' },
-      { start: '{%', end: '%}' }
+      { start: '[[', end: ']]' }
     ]
   })
 ])
-  .process(`<div prevent-widows>Prevent widow words {{ 'ignore this expression block' }} {% and this one too %}</div>`)
+  .process(
+    `<p prevent-widows>Using the option to [[ 'ignore an expression block' ]] is being tested here.</p>`
+  )
 ```
 
 Result:
 
 ```html
-<div>Prevent widow&nbsp;words {{ 'ignore this expression block' }} {% and this one too %}</div>
+<p>Using the option to [[ 'ignore an expression block' ]] is being tested&nbsp;here.</p>
 ```
 
 [npm]: https://www.npmjs.com/package/posthtml

@@ -119,19 +119,22 @@ You may add custom delimiters to ignore:
 posthtml([
   preventWidows({
     ignore: [
-      { start: '[[', end: ']]' }
+      { start: '[[', end: ']]' },
+      // Inside MSO comments
+      { start: '<!--[', end: ']>' },
+      { start: '<![', end: ']--><' }, // <![endif]-->
     ]
   })
 ])
   .process(
-    `<p prevent-widows>Using the option to [[ 'ignore an expression block' ]] is being tested here.</p>`
+    `<p prevent-widows>Using the option to <!--[if mso]> ignore this MSO comment <![endif]--> is being tested here.</p>`
   )
 ```
 
 Result:
 
 ```html
-<p>Using the option to [[ 'ignore an expression block' ]] is being tested&nbsp;here.</p>
+<p>Using the option to <!--[if mso]> ignore this MSO comment <![endif]--> is being tested&nbsp;here.</p>
 ```
 
 ### `createWidows`

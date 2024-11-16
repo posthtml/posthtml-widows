@@ -4,9 +4,9 @@ import plugin from '../lib/index.js'
 
 const clean = html => html.replaceAll(/[^\S\r\n]+$/gm, '').trim()
 
-const process = (input, options, log = false) => {
+const process = (input, options, posthtmlOptions, log = false) => {
   return posthtml([plugin(options)])
-    .process(input)
+    .process(input, posthtmlOptions)
     .then(result => log ? console.log(result.html) : clean(result.html))
     .then(html => html)
 }
@@ -50,6 +50,12 @@ test('Multiple nested levels', async () => {
   ).toEqual('<div><p>one two</p><p>three four five&nbsp;six</p></div>')
 })
 
+test('Custom attribute', async () => {
+  expect(
+    await process('<p fix-widows>lorem ipsum dolor sit amet</p>', { attributes: ['fix-widows'] })
+  ).toEqual('<p>lorem ipsum dolor sit&nbsp;amet</p>')
+})
+
 test('Attribute in nested tags only', async () => {
   expect(
     await process('<p><span prevent-widows>lorem ipsum dolor sit</span></p>')
@@ -62,14 +68,34 @@ test('Works in MSO Comments', async () => {
   ).toEqual('<p><!--[if mso]>lorem ipsum dolor&nbsp;sit<![endif]--></p>')
 })
 
-test('Ignore default', async () => {
+test('`ignore` defaults', async () => {
   expect(
-    await process('<p prevent-widows>{{lorem ipsum dolor sit}}</p>')
-  ).toEqual('<p>{{lorem ipsum dolor sit}}</p>')
+    await process(`<p prevent-widows>{{ 'lorem ipsum dolor sit' }}</p>`)
+  ).toEqual(`<p>{{ 'lorem ipsum dolor sit' }}</p>`)
+
+  expect(
+    await process(`<p prevent-widows>Hi{% if user.name %} user.name{% endif %}!</p>`)
+  ).toEqual(`<p>Hi{% if user.name %} user.name{% endif %}!</p>`)
+
+  expect(
+    await process(`<p prevent-widows>Using the option to {{ 'ignore an expression block' }} is being tested here</p>`)
+  ).toEqual(`<p>Using the option to {{ 'ignore an expression block' }} is being tested&nbsp;here</p>`)
+
+  expect(
+    await process(
+      `<p no-widows>Hi <?php echo $user->name; ?>, thanks for signing up!</p>`,
+      {},
+      {
+        directives: [
+          { name: '?php', start: '<', end: '>' },
+        ],
+      }
+    )
+  ).toEqual(`<p>Hi <?php echo $user->name; ?>, thanks for signing&nbsp;up!</p>`)
 })
 
-test('Custom ignore', async () => {
+test('Custom `ignore`', async () => {
   expect(
-    await process('<p prevent-widows>{% lorem ipsum dolor sit %}</p>', { ignore: [{ start: '{%', end: '%}' }] })
-  ).toEqual('<p>{% lorem ipsum dolor sit %}</p>')
+    await process('<p prevent-widows><%= one two there four %> five six seven eight</p>', { ignore: [{ start: '<%=', end: '%>' }] })
+  ).toEqual('<p><%= one two there four %> five six seven&nbsp;eight</p>')
 })

@@ -6,5 +6,5 @@ export default defineBuildConfig({
   },
   rootDir: './lib',
   outDir: '../dist',
-  entries: ['index.js', 'index-async.js'],
+  entries: ['index.js'],
 })

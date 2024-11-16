@@ -1,7 +1,7 @@
 {
   "name": "posthtml-widows",
   "description": "PostHTML plugin for preventing widow words in strings.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "author": "PostHTML (https://github.com/cossssmin)",
   "bugs": "https://github.com/posthtml/posthtml-widows/issues",

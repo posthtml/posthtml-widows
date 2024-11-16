@@ -29,6 +29,11 @@ Output:
 </div>
 ```
 
+- [x] configurable attribute names
+- [x] set the minimum number of words
+- [x] ignore templating logic or expressions
+- [x] reverse it: create widow words
+
 ## Install
 
 ```
@@ -152,11 +157,15 @@ Result:
 <p>The quick brown fox</p>
 ```
 
-[npm]: https://www.npmjs.com/package/posthtml
-[npm-version-shield]: https://img.shields.io/npm/v/posthtml.svg
-[npm-stats]: http://npm-stat.com/charts.html?package=posthtml
-[npm-stats-shield]: https://img.shields.io/npm/dt/posthtml.svg
-[github-ci]: https://github.com/posthtml/posthtml-plugin-starter/actions/workflows/nodejs.yml
-[github-ci-shield]: https://github.com/posthtml/posthtml-plugin-starter/actions/workflows/nodejs.yml/badge.svg
-[license]: ./license
-[license-shield]: https://img.shields.io/npm/l/posthtml.svg
+## License
+
+[MIT](./LICENSE)
+
+[npm]: https://www.npmjs.com/package/posthtml-widows
+[npm-version-shield]: https://img.shields.io/npm/v/posthtml-widows.svg
+[npm-stats]: http://npm-stat.com/charts.html?package=posthtml-widows
+[npm-stats-shield]: https://img.shields.io/npm/dt/posthtml-widows.svg
+[github-ci]: https://github.com/posthtml/posthtml-widows/actions/workflows/nodejs.yml
+[github-ci-shield]: https://github.com/posthtml/posthtml-widows/actions/workflows/nodejs.yml/badge.svg
+[license]: ./LICENSE
+[license-shield]: https://img.shields.io/npm/l/posthtml-widows.svg

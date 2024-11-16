@@ -96,8 +96,8 @@ test('`ignore` defaults', async () => {
 
 test('Custom `ignore`', async () => {
   expect(
-    await process('<p prevent-widows><%= one two there four %> five six seven eight</p>', { ignore: [{ start: '<%=', end: '%>' }] })
-  ).toEqual('<p><%= one two there four %> five six seven&nbsp;eight</p>')
+    await process('<p prevent-widows>[[ one two there four ]] five six seven eight</p>', { ignore: [{ start: '[[', end: ']]' }] })
+  ).toEqual('<p>[[ one two there four ]] five six seven&nbsp;eight</p>')
 })
 
 test('`createWidows` option', async () => {

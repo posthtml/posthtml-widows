@@ -69,7 +69,7 @@ posthtml([
     attributes: ['fix-widows']
   })
 ])
-  .process('<div fix-widows>Prevent widow words</div>')
+  .process('<p fix-widows>The quick brown fox</p>')
 ```
 
 ## Options

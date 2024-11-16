@@ -1,12 +1,12 @@
 {
-  "name": "posthtml-plugin-starter",
-  "description": "PostHTML plugin starter project.",
+  "name": "posthtml-widows",
+  "description": "PostHTML plugin for preventing widow words in strings.",
   "version": "0.0.0",
   "license": "MIT",
-  "author": "PostHTML (https://github.com/posthtml)",
-  "bugs": "https://github.com/posthtml/posthtml-plugin-starter/issues",
-  "homepage": "https://github.com/posthtml/posthtml-plugin-starter",
-  "repository": "posthtml/posthtml-plugin-starter",
+  "author": "PostHTML (https://github.com/cossssmin)",
+  "bugs": "https://github.com/posthtml/posthtml-widows/issues",
+  "homepage": "https://github.com/posthtml/posthtml-widows",
+  "repository": "posthtml/posthtml-widows",
   "type": "module",
   "exports": {
     ".": {
@@ -32,15 +32,22 @@
     "test": "vitest run --coverage"
   },
   "keywords": [
+    "widows",
+    "string",
+    "typography",
+    "paragraph",
     "html",
+    "text",
+    "email",
+    "copywriting",
     "posthtml",
     "posthtml-plugin"
   ],
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@vitest/coverage-v8": "^2.1.5",
-    "posthtml": "^0.16.5",
+    "posthtml": "^0.16.6",
     "unbuild": "^2.0.0",
-    "vitest": "^2.0.2"
+    "vitest": "^2.1.5"
   }
 }

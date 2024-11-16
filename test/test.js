@@ -61,3 +61,15 @@ test('Works in MSO Comments', async () => {
     await process('<p prevent-widows><!--[if mso]>lorem ipsum dolor sit<![endif]--></p>')
   ).toEqual('<p><!--[if mso]>lorem ipsum dolor&nbsp;sit<![endif]--></p>')
 })
+
+test('Ignore default', async () => {
+  expect(
+    await process('<p prevent-widows>{{lorem ipsum dolor sit}}</p>')
+  ).toEqual('<p>{{lorem ipsum dolor sit}}</p>')
+})
+
+test('Custom ignore', async () => {
+  expect(
+    await process('<p prevent-widows>{% lorem ipsum dolor sit %}</p>', { ignore: [{ start: '{%', end: '%}' }] })
+  ).toEqual('<p>{% lorem ipsum dolor sit %}</p>')
+})

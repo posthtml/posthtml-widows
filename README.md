@@ -54,7 +54,7 @@ Result:
 <div>Prevent widow&nbsp;words</div>
 ```
 
-## Options
+## Attributes
 
 The plugin will only handle strings inside elements that have one of the following attributes:
 
@@ -73,6 +73,55 @@ posthtml([
   })
 ])
   .process('<div fix-widows>Prevent widow words</div>')
+```
+
+## Options
+
+### `minWords`
+
+Type: `number`\
+Default: `4`
+
+The minimum number of words required in a string to be processed.
+
+```js
+import posthtml from 'posthtml'
+import preventWidows from 'posthtml-widows'
+
+posthtml([
+  preventWidows({
+    minWords: 3
+  })
+])
+  .process('<div prevent-widows>Prevent widow words</div>')
+```
+
+### `ignore`
+
+Type: `Array`\
+Default: `[{ start: '{{', end: '}}' }]`
+
+An array of objects that specify the start and end delimiters of strings to ignore.
+
+```js
+import posthtml from 'posthtml'
+import preventWidows from 'posthtml-widows'
+
+posthtml([
+  preventWidows({
+    ignore: [
+      { start: '{{', end: '}}' },
+      { start: '{%', end: '%}' }
+    ]
+  })
+])
+  .process(`<div prevent-widows>Prevent widow words {{ 'ignore this expression block' }} {% and this one too %}</div>`)
+```
+
+Result:
+
+```html
+<div>Prevent widow&nbsp;words {{ 'ignore this expression block' }} {% and this one too %}</div>
 ```
 
 [npm]: https://www.npmjs.com/package/posthtml

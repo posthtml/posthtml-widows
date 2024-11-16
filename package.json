@@ -1,0 +1,46 @@
+{
+  "name": "posthtml-plugin-starter",
+  "description": "PostHTML plugin starter project.",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "PostHTML (https://github.com/posthtml)",
+  "bugs": "https://github.com/posthtml/posthtml-plugin-starter/issues",
+  "homepage": "https://github.com/posthtml/posthtml-plugin-starter",
+  "repository": "posthtml/posthtml-plugin-starter",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vitest",
+    "release": "npx np",
+    "build": "unbuild",
+    "prepack": "unbuild",
+    "lint": "biome lint ./lib",
+    "pretest": "npm run lint",
+    "test": "vitest run --coverage"
+  },
+  "keywords": [
+    "html",
+    "posthtml",
+    "posthtml-plugin"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@vitest/coverage-v8": "^2.1.4",
+    "posthtml": "^0.16.5",
+    "unbuild": "^2.0.0",
+    "vitest": "^2.0.2"
+  }
+}

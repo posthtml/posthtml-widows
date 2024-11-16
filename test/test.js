@@ -55,3 +55,9 @@ test('Attribute in nested tags only', async () => {
     await process('<p><span prevent-widows>ipsum dolor</span></p>')
   ).toEqual('<p><span>ipsum&nbsp;dolor</span></p>')
 })
+
+test('Works in MSO Comments', async () => {
+  expect(
+    await process('<p prevent-widows><!--[if mso]>lorem ipsum<![endif]--></p>')
+  ).toEqual('<p><!--[if mso]>lorem&nbsp;ipsum<![endif]--></p>')
+})

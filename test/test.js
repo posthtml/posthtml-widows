@@ -18,14 +18,14 @@ test('Skips unmarked nodes', async () => {
 
 test('Basic functionality', async () => {
   expect(
-    await process('<p prevent-widows>lorem ipsum dolor</p>')
-  ).toEqual('<p>lorem ipsum&nbsp;dolor</p>')
+    await process('<p prevent-widows>lorem ipsum dolor sit amet</p>')
+  ).toEqual('<p>lorem ipsum dolor sit&nbsp;amet</p>')
 })
 
 test('Nested tags', async () => {
   expect(
-    await process('<p prevent-widows><span>lorem ipsum dolor</span></p>')
-  ).toEqual('<p><span>lorem ipsum&nbsp;dolor</span></p>')
+    await process('<p prevent-widows><span>lorem ipsum dolor sit amet</span></p>')
+  ).toEqual('<p><span>lorem ipsum dolor sit&nbsp;amet</span></p>')
 })
 
 test('Mixed content', async () => {
@@ -34,8 +34,8 @@ test('Mixed content', async () => {
   ).toEqual('<p>lorem ipsum <span>dolor</span></p>')
 
   expect(
-    await process('<p prevent-widows>lorem ipsum <span>dolor sit amet</span></p>')
-  ).toEqual('<p>lorem ipsum <span>dolor sit&nbsp;amet</span></p>')
+    await process('<p prevent-widows>a string <span>with a bunch of words</span></p>')
+  ).toEqual('<p>a string <span>with a bunch of&nbsp;words</span></p>')
 })
 
 test('Empty content', async () => {
@@ -46,18 +46,18 @@ test('Empty content', async () => {
 
 test('Multiple nested levels', async () => {
   expect(
-    await process('<div prevent-widows><p>one two</p><p>three four</p></div>')
-  ).toEqual('<div><p>one&nbsp;two</p><p>three&nbsp;four</p></div>')
+    await process('<div prevent-widows><p>one two</p><p>three four five six</p></div>')
+  ).toEqual('<div><p>one two</p><p>three four five&nbsp;six</p></div>')
 })
 
 test('Attribute in nested tags only', async () => {
   expect(
-    await process('<p><span prevent-widows>ipsum dolor</span></p>')
-  ).toEqual('<p><span>ipsum&nbsp;dolor</span></p>')
+    await process('<p><span prevent-widows>lorem ipsum dolor sit</span></p>')
+  ).toEqual('<p><span>lorem ipsum dolor&nbsp;sit</span></p>')
 })
 
 test('Works in MSO Comments', async () => {
   expect(
-    await process('<p prevent-widows><!--[if mso]>lorem ipsum<![endif]--></p>')
-  ).toEqual('<p><!--[if mso]>lorem&nbsp;ipsum<![endif]--></p>')
+    await process('<p prevent-widows><!--[if mso]>lorem ipsum dolor sit<![endif]--></p>')
+  ).toEqual('<p><!--[if mso]>lorem ipsum dolor&nbsp;sit<![endif]--></p>')
 })

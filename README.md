@@ -84,7 +84,7 @@ The minimum number of words a string must contain to be processed.
 ```js
 posthtml([
   preventWidows({
-    minWords: 3
+    minWords: 3,
   })
 ])
   .process('<p prevent-widows>Prevent widow words</p>')
@@ -127,6 +127,29 @@ Result:
 
 ```html
 <p>Using the option to [[ 'ignore an expression block' ]] is being tested&nbsp;here.</p>
+```
+
+### `createWidows`
+
+Type: `boolean`\
+Default: `false`
+
+You may also use the plugin to do the opposite of preventing widow words by replacing the `&nbsp;` between the last two words with a regular space.
+
+```js
+posthtml([
+  preventWidows({
+    attributes: ['create-widows'],
+    createWidows: true,
+  })
+])
+  .process('<p create-widows>The quick brown&nbsp;fox</p>')
+```
+
+Result:
+
+```html
+<p>The quick brown fox</p>
 ```
 
 [npm]: https://www.npmjs.com/package/posthtml

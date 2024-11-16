@@ -99,3 +99,15 @@ test('Custom `ignore`', async () => {
     await process('<p prevent-widows><%= one two there four %> five six seven eight</p>', { ignore: [{ start: '<%=', end: '%>' }] })
   ).toEqual('<p><%= one two there four %> five six seven&nbsp;eight</p>')
 })
+
+test('`createWidows` option', async () => {
+  expect(
+    await process(
+      `<p create-widows>lorem ipsum dolor {{ 'leave this part&nbsp;alone' }} sit amet consectetur adipiscing&nbsp;elit</p>`,
+      {
+        createWidows: true,
+        attributes: ['create-widows']
+      }
+    )
+  ).toEqual(`<p>lorem ipsum dolor {{ 'leave this part&nbsp;alone' }} sit amet consectetur adipiscing elit</p>`)
+})
